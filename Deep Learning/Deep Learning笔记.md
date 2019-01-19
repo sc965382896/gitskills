@@ -382,7 +382,7 @@ AI、机器学习、表示学习、深度学习之间的异同：
 > $$
 >
 
-![logistic sigmoid函数](C:\Users\诸葛小白菜\Desktop\logistic sigmoid.jpg)
+![logistic sigmoid函数](.\logistic sigmoid.jpg)
 
 1. softplus函数
 
@@ -391,7 +391,7 @@ AI、机器学习、表示学习、深度学习之间的异同：
 > $$
 >
 
-![softplus函数](C:\Users\诸葛小白菜\Desktop\softplus.jpg)
+![softplus函数](.\softplus.jpg)
 
 ### 3.10 贝叶斯规则
 
