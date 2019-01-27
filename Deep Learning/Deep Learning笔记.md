@@ -2651,3 +2651,50 @@ Adam对超参数的选择鲁棒性很强。
 > J(\theta)\approx J(\theta_0)+(\theta-\theta_0)^T\nabla_\theta J(\theta_0)+\frac{1}{2}(\theta-\theta_0)^TH(\theta-\theta_0)\tag{8.9}
 > $$
 
+牛顿法参数更新规则：
+
+> $$
+> \theta^*=\theta_0-H^{-1}\nabla_\theta J(\theta_0)\tag{8.10}
+> $$
+
+如果目标函数是凸的但非二次的，更新将是迭代的，如算法8.8.
+
+对于非二次的表面，只要Hessian矩阵保持正定，牛顿法就可以迭代地应用。
+
+------
+
+实验法 8.8 目标为$J(\theta)=\frac{1}{m}\sum^m_{i=1}L(f(x^{(i)};\theta),y^{(i)})$的牛顿法。
+
+Require： 初始参数$\theta_0$
+
+Require：包含$m$个样本的训练集
+
+​	while 没有达到停止准则 do
+
+​		计算梯度：$g\leftarrow \frac{1}{m}\nabla_\theta\sum_iL(f(x^{(i)};\theta), y^{(i)})$
+
+​		计算Hessian矩阵：$H\leftarrow\frac{1}{m}\nabla_\theta^2\sum_iL(f(x^{(i)};\theta),y^{(i)}$
+
+​		计算Hessian逆：$H^{-1}$
+
+​		计算更新：$\Delta\theta=-H^{-1}g$
+
+​		应用更新：$\theta=\theta+\Delta\theta$
+
+​	end while
+
+------
+
+> 当靠近鞍点处，牛顿法会导致更新朝错误的方向移动，可以通过正则化Hessian矩阵避免。
+
+常用的正则化策略为在Hessian矩阵对角线上增加常数$\alpha$。正则化更新变为：
+
+> $$
+> \theta^*=\theta_0-[H(f\theta_0)+\alpha I]^{-1}\nabla_\theta f(\theta_0)\tag{8.11}
+> $$
+
+除了目标函数的某些特征带来的挑战，牛顿法用于训练大型神经网络还受限于其显著的计算负担。
+
+1. Hessian矩阵中元素数目是参数数量的平方。
+2. 参数每次都会更新，需要重新计算Hessian的逆。
+
