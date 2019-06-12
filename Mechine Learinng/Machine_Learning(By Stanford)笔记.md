@@ -77,16 +77,16 @@ $$
 $$
 \begin{split}
 \mathrm{repeat until convergence: \{}\qquad\qquad\qquad\qquad\qquad\qquad\\
-\theta_0:=\theta_0-\alpha\cfrac{1}{m}\sum_{i=1}^m(h_\theta(x^{(i)}-y^{(i)})\\
-\theta_1:=\theta_1-\alpha\cfrac{1}{m}\sum_{i=1}^m(h_\theta(x^{(i)}-y^{(i)})\\
+\theta_0:=\theta_0-\alpha\cfrac{1}{m}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})\\
+\theta_1:=\theta_1-\alpha\cfrac{1}{m}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})x^{(i)}_1\\
 \mathrm{\}}\qquad\qquad\qquad\qquad\qquad\qquad
 \end{split}
 $$
 对于多变量的线性回归：
 $$
 \begin{split}
-\mathrm{repeat until convergence: \{}\qquad\qquad\qquad\qquad\qquad\qquad\\
-\theta_i:=\theta_i-\alpha\cfrac{1}{m}\sum_{i=1}^m(h_\theta(x^{(i)}-y^{(i)})\qquad\mathrm{for\quad j:=0...n}\\
+\mathrm{repeat\ until\ convergence: \{}\qquad\qquad\qquad\qquad\qquad\qquad\\
+\theta_j:=\theta_j-\alpha\cfrac{1}{m}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})x^{(i)}_j\qquad\mathrm{for\quad j:=0...n}\\
 \mathrm{\}}\qquad\qquad\qquad\qquad\qquad\qquad
 \end{split}
 $$
@@ -105,7 +105,114 @@ $$
 学习率对梯度下降的影响：
 
 * If $\alpha$ is too small: slow convergence.
-
 * If $\alpha$ is too large: ￼may not decrease on every iteration and thus may not converge.
 
+### 2.3 Features and Polynomial Regression
+
+We can improve our features and the form of our hypothesis function in a couple different ways.
+
+> 例如将两个特征相乘得到一个新的特征。
+
+**Polynomial Regression**
+
+Our hypothesis function need not be linear (a straight line) if that does not fit the data well.
+$$
+\begin{split}
+h_\theta(x) &= \theta_0+\theta_1x_1+\theta_2x_1^2\\h_\theta(x) &= \theta_0+\theta_1x_1+\theta_2\sqrt {x_1}
+\end{split}\tag{2.6}
+$$
+
+### 2.4 Normal Equation
+
+The **normal equation** formula is given below:
+$$
+\theta = (X^TX)^{-1}X^Ty\tag{2.7}
+$$
+
+| **Gradient Descent**       | **Normal Equation**                           |
+| -------------------------- | --------------------------------------------- |
+| Need to choose alpha       | No need to choose alpha                       |
+| Needs many iterations      | No need to iterate                            |
+| $O(kn^2)$                  | $O(n^3)$, need to calculate inverse of $X^TX$ |
+| Works well when n is large | Slow if n is very large                       |
+
+### 2. 5 Regularized Linear Regression
+
+**Cost Function:** 
+$$
+J(\theta_0,\theta_1)=\cfrac{1}{2m}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})^2+\cfrac{\lambda}{2m}\sum^n_{j=1}\theta_j^2\tag{2.8}
+$$
+**Gradient Descent:** 
+$$
+\cfrac{\partial J(\theta)}{\partial \theta_0}=\cfrac{1}{m}\sum^m_{i=1}(h_\theta(x^{(i)})-y^{(i)})x_0^{(i)}\\
+\cfrac{\partial J(\theta)}{\partial \theta_j}=\cfrac{1}{m}\sum^m_{i=1}(h_\theta(x^{(i)})-y^{(i)})x_j^{(i)}+\cfrac{\lambda}{m}\theta_j\tag{2.9}
+$$
+**Normal Equation:**
+$$
+\theta = (X^TX+\lambda\cdot L)^{-1}X^Ty\\
+where\ L = 
+\left[\begin{array}{ccc}
+0\\
+&1\\
+&&\ddots\\
+&&&1\\
+\end{array}\right]\tag{2.10}
+$$
+
 ## 3 Logistic Regression
+
+### 3.1 Hypothesis Representation
+
+Our new form uses the "Sigmoid Function," also called the "Logistic Function":
+$$
+\begin{split}
+h_\theta(x) &= g(\theta^Tx)\\
+z &= \theta^Tx\\
+g(z) &= \cfrac{1}{1+e^{-z}}
+\end{split}\tag{3.1}
+$$
+
+> 这里的$h_\theta(x)$代表的是输出为1的概率。
+
+### 3.2 Cost Function
+
+We can fully write out our entire cost function as follows:
+$$
+J(\theta)=\cfrac{1}{m}=\sum_{i=1}^m[y^{(i)}\log(h_\theta(x^{(i)}))+(1-y^{(i)})log(1-h_\theta(x^{(i)}))]\tag{3.2}
+$$
+We can work out the derivative part using calculus to get:
+$$
+Repeat\{ \qquad\qquad\qquad\qquad\qquad\qquad\\
+    \theta_j:=\theta_j-\cfrac{\alpha}{m}\sum^m_{i=1}(h_\theta(x^{(i)})-y^{(i)})x^{(i)}_{j}\\
+\}\qquad\quad\qquad\qquad\qquad\qquad\qquad\qquad\tag{3.3}
+$$
+
+> 这里求导的时需要注意的一点：$\log(1-h_\theta(x))$中的“-”号
+
+### 3.3 Overfitting
+
+![Overfitting and Underfitting](.\images\过拟合欠拟合.png)
+
+There are two main options to address the issue of overfitting: 
+
+1. Reduce the number of features:
+   - Manually select which features to keep.
+   - Use a **model selection algorithm**.
+2. Regularization
+   * Keep all the features, but reduce the **magnitude** of parameters $\theta_j$ .
+   * **Regularization** works well when we have a lot of slightly useful features.
+
+### 3.4 Regularized Logistic Regression
+
+**Cost Function:** 
+$$
+J(\theta)=-\cfrac{1}{m}\sum_{i=1}^m[y^{(i)}\log(h_\theta(x^{(i)}))+(1-y^{(i)})log(1-h_\theta(x^{(i)}))]+\cfrac{\lambda}{2m}\sum^n_{j=1}\theta_j^2\tag{3.4}
+$$
+**Gradient Descent:**
+$$
+\cfrac{\partial J(\theta)}{\partial \theta_0}=\cfrac{1}{m}\sum^m_{i=1}(h_\theta(x^{(i)})-y^{(i)})x_0^{(i)}\\
+\cfrac{\partial J(\theta)}{\partial \theta_j}=\cfrac{1}{m}\sum^m_{i=1}(h_\theta(x^{(i)})-y^{(i)})x_j^{(i)}+\cfrac{\lambda}{m}\theta_j\tag{3.5}
+$$
+
+## 4 Neural Network
+
