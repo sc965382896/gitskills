@@ -91,7 +91,7 @@ $$
 \end{split}
 $$
 
-在实际应用中两种加速梯度下降的方法：
+**在实际应用中两种加速梯度下降的方法**：
 
 * feature scaling：将输入值除以输入量的范围（最大值减最小值）。
 
@@ -135,6 +135,13 @@ $$
 | Needs many iterations      | No need to iterate                            |
 | $O(kn^2)$                  | $O(n^3)$, need to calculate inverse of $X^TX$ |
 | Works well when n is large | Slow if n is very large                       |
+
+**Normal Equation Noninvertibility**
+
+if$X^TX$is noninvertible, the common causs might be having:
+
+* Redundant features, where two features are very closely related (i.e. they are linearly dependent)
+* Too many features (e.g. m ≤ n). In this case, delete some features or use "regularization"
 
 ### 2. 5 Regularized Linear Regression
 
@@ -216,3 +223,17 @@ $$
 
 ## 4 Neural Network
 
+**simplistic representation**
+$$
+\left[ \begin{array}{ccc}
+x_0\\
+x_1\\
+x_2
+\end{array} 
+\right]
+\rightarrow
+[\quad]
+\rightarrow
+h_\theta(x)
+\tag{3.6}
+$$
