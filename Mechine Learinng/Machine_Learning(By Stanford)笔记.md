@@ -185,7 +185,7 @@ $$
 
 We can fully write out our entire cost function as follows:
 $$
-J(\theta)=\cfrac{1}{m}=\sum_{i=1}^m[y^{(i)}\log(h_\theta(x^{(i)}))+(1-y^{(i)})log(1-h_\theta(x^{(i)}))]\tag{3.2}
+J(\theta)=-\cfrac{1}{m}\sum_{i=1}^m[y^{(i)}\log(h_\theta(x^{(i)}))+(1-y^{(i)})log(1-h_\theta(x^{(i)}))]\tag{3.2}
 $$
 We can work out the derivative part using calculus to get:
 $$
@@ -223,7 +223,8 @@ $$
 
 ## 4 Neural Network
 
-**simplistic representation**
+### 4.1 simplistic representation
+
 $$
 \left[ \begin{array}{ccc}
 x_0\\
@@ -236,4 +237,191 @@ x_2
 \rightarrow
 h_\theta(x)
 \tag{3.6}
+$$
+
+对于含有一层隐含层函数，可表示为：
+$$
+\left[ \begin{array}{ccc}
+x_0\\
+x_1\\
+x_2
+\end{array} 
+\right]
+\rightarrow
+\left[ \begin{array}{ccc}
+a_1^{2}\\
+a_2^{2}\\
+a_3^{2}
+\end{array} 
+\right]
+\rightarrow
+h_\theta(x)
+\tag{3.7}
+$$
+各个激活节点表示方式如下：
+$$
+\begin{split}
+a_1^{2} &= g(\Theta_{10}^{1}x_0+\Theta_{11}^{1}x_1+\Theta_{12}^{1}x_2+\Theta_{13}^{1}x_3) \\
+a_2^{2} &= g(\Theta_{20}^{1}x_0+\Theta_{21}^{1}x_1+\Theta_{22}^{1}x_2+\Theta_{23}^{1}x_3) \\
+a_3^{2} &= g(\Theta_{30}^{1}x_0+\Theta_{31}^{1}x_1+\Theta_{32}^{1}x_2+\Theta_{33}^{1}x_3)\\
+h_{\Theta}(x)=a_1^{(1)}&=g(\Theta_{10}^{2}a_0^{(2)}+\Theta_{11}^{2}a_1^{(2)}+\Theta_{12}^{2}a_2^{(2)}+\Theta_{13}^{2}a_3^{(2)}) \\
+\end{split}\tag{3.8}
+$$
+
+> * $a_i^{(j)}$："activation" of unit *i* in layer *j*
+> * $\Theta^{(j)}$：matrix of weights controlling function mapping from layer *j* to layer *j*+1
+
+### 4.2 Cost Function
+
+首先定义如下变量：
+
+* $L$：total number of layers in the network
+* $s_l$：number of units (not counting bias unit) in layer l
+* $K$：number of output units/classes
+
+损失函数（Cost Function）可表示为：
+$$
+J(\Theta)
+=
+-\cfrac{1}{m}\sum_{i=1}^m\sum_{k=1}^K[y_k^{(i)}\log((h_\theta(x^{(i)}))_k)+(1-y_k^{(i)})log(1-(h_\theta(x^{(i)}))_k)] + 
+\cfrac{\lambda}{2m}\sum^{L-1}_{l=1}\sum_{i=1}^{s_l}\sum_{j=1}^{s_{l+1}}(\Theta_{j,i}^{(l)})^2
+\tag{3.9}
+$$
+Note: 
+
+* the double sum simply adds up the logistic regression costs calculated for each cell in the output layer
+
+* the triple sum simply adds up the squares of all the individual Θs in the entire network.
+* the i in the triple sum does **not** refer to training example i
+
+### 4.3 Backpropagation Algorithm
+
+Given training set ${(x^{(1)},y^{(1)})⋯(x^{(m)},y^{(m)})}$
+
+* Set $\Delta_{i,j}^{(l)}:=0$for all (l,i,j), (hence you end up having a matrix full of zeros)
+
+For training example t =1 to m:
+
+1. Set $a^{(1)}=x^{(t)}$
+
+2. Perform forward propagation to compute $a^{(l)}$ for l=2,3,...,L
+
+   ![](.\images\Gradient computation.png)
+
+3. Using $y^{(t)}$, compute  $\delta^{(L)} = a^{(L)} - y^{(t)}$
+
+4. Compute $δ^{(L−1)},\delta^{(L-2)},...,\delta^{(2)}$ using $\delta^{(l)}=((\Theta^{(l)})^T\delta^{(l+1)}.*a^{(l)}.*(1-a^{(l)}))$
+
+5. $\Delta_{i,j}^{(l)}:=\Delta_{i,j}^{(l)}+a_j^{(l)}\delta_i^{(l+1)}$ or with vectorization, $ \Delta^{(l)} := \Delta^{(l)} + \delta^{(l+1)}(a^{(l)})^T$
+
+Hence we update our new $\Delta$ matrix.
+
+* $D_{i,j}^{(l)}:=\cfrac{1}{m}(\Delta_{i,j}^{(l)}+\lambda\Theta_{i,j}^{(l)})$, if $j\neq 0$.
+* $D_{i,j}^{(l)}:=\cfrac{1}{m}(\Delta_{i,j}^{(l)})$, if$j=0$
+
+### 4.4 Gradient Checking
+
+Gradient checking will assure that our backpropagation works as intended. We can approximate the derivative of our cost function with:
+$$
+\cfrac{\part}{\part \Theta_j}J(\Theta)\approx\cfrac{J(\Theta+\epsilon)-J(\Theta-\epsilon)}{2\epsilon}
+$$
+With multiple theta matrices, we can approximate the derivative **with respect to** $\Theta_j$ as follows:
+$$
+\cfrac{\part}{\part \Theta_j}J(\Theta)\approx\cfrac{J(\Theta_1,\ldots,\Theta_j+\epsilon,\ldots,\Theta_n)-J(\Theta_1,\ldots,\Theta_j-\epsilon,\ldots,\Theta_n)}{2\epsilon}
+$$
+
+### 4.5 Random Initialization
+
+Initializing all theta weights to zero does not work with neural networks. When we backpropagate, all nodes will update to the same value repeatedly. Instead we can randomly initialize our weights for our $\Theta$ matrices using the following method:
+
+Initialize each $\Theta_{ij}^{(l)}$ to a random value in $[-\epsilon, \epsilon]$
+
+* $\Theta^{(l)}:=rand(s_{l+1},s_l)*(2*\epsilon)-\epsilon$ 
+
+## 5 Evaluating a Learning Algorithm
+
+### 5.1 Model Selection and Train/Validation/Test Sets
+
+One way to break down our dataset into the three sets is:
+
+* Training set: 60%
+* Cross validation set: 20%
+* Test set: 20%
+
+选择不同的多项式次数d时，分别计算不同集合的误差值：
+
+1. 用训练集训练权重
+2. 用验证集选择多项式次数d
+3. 用测试集估计泛化误差
+
+### 5.2 Bias vs. Variance
+
+* We need to distinguish whether **bias** or **variance** is the problem contributing to bad predictions.
+* High bias is underfitting and high variance is overfitting. Ideally, we need to find a golden mean between these two.
+
+The training error will tend to **decrease** as we increase the degree d of the polynomial.
+
+At the same time, the cross validation error will tend to **decrease** as we increase d up to a point, and then it will **increase** as d is increased, forming a convex curve.
+
+![bias vs. variance](.\images\bias vs variance.png)
+
+**Regularization and Bias/Variance**
+
+1. 创建一系列$\lambda$值
+2. 创建一系列不同次数的多项式模型
+3. 在所有的$\lambda$上进行迭代学习$\Theta$
+4. 在验证集上使用学习的$\Theta$计算不含正则化项或$\lambda=0$情况下的$J_{CV}(\Theta)$
+5. 选择在验证集上产生最小偏差的参数组合
+6. 在测试集上使用最佳参数组合检查是否该模型是否具有好的泛化。
+
+### 5.3 Learning Curves
+
+**Experiencing high bias:**
+
+* **Low training set size**: causes $J_{train}(\Theta)$ to be low and $J_{CV}(\Theta)$ to be high.
+
+* **Large training set size**: causes both $J_{train}(\Theta)$ and $J_{CV}(\Theta)$ to be high with $J_{train}(\Theta)\approx J_{CV}(\Theta)$.
+
+![high bias](.\images\high bias.png)
+
+**Experiencing high variance:**
+
+* **Low training set size**: causes $J_{train}(\Theta)$ to be low and $J_{CV}(\Theta)$ to be high.
+
+* **Large training set size**: $J_{train}(\Theta)$ increases with training set size and $J_{CV}(\Theta)$ continues to decrease without leveling off. Also, $J_{train}(\Theta)< J_{CV}(\Theta) $ but the difference between them remains significant.
+
+![high variance](.\images\high variance.png)
+
+Our decision process can be broken down as follows:
+
+- **Getting more training examples:** Fixes high variance
+
+- **Trying smaller sets of features:** Fixes high variance
+
+- **Adding features:** Fixes high bias
+
+- **Adding polynomial features:** Fixes high bias
+
+- **Decreasing λ:** Fixes high bias
+
+- **Increasing λ:** Fixes high variance.
+
+**Error metrics for skewed classes**
+
+| Predicted class/Actual class | 1              | 0              |
+| :--------------------------- | -------------- | -------------- |
+| **1**                        | True positive  | False positive |
+| **0**                        | False negative | True negative  |
+
+**Precision**(预测为真正确的占所有预测为真的比重)
+$$
+P = \cfrac{True\:positive}{True \:pos+False\:pos}\tag{5.1}
+$$
+**Recall**(预测为真正确的占所有真正为真的比重)
+$$
+R = \cfrac{True\:positive}{True\:pos+False \:neg}\tag{5.2}
+$$
+使用下述公式比较：
+$$
+2\cfrac{PR}{P+R}\tag{5.3}
 $$
