@@ -1,26 +1,49 @@
-# 安装Git
+# Git 配置
 
-安装完成后打开git，然后进行以下操作：
+Git 提供了 git config 工具，用来配置或读取相应的工作环境变量。
 
-1. 配置用户名 
-   $ git config --global user.name "XX"
-2. 配置用户邮箱
-   \$ git config --global user.email "X@X"
+## 配置用户信息
 
-# 创建版本库
+```
+git config --global user.name (name) # 配置用户名
+git config --global user.email (email_addr) # 配置用户邮箱
+```
 
-新建文件夹
-\$ mkdir learngit
-进入待定位置
-\$ cd learngit
-显示当前位置 
-\$ pwd
+## 查看配置信息
 
-初始化仓库
+```
+git config --list
+```
 
-$ init
+# 工作区、暂存区和版本库
 
-> 可以用资源管理器打开文件夹，然后使用右键->Git Bash Here，快速定位到当前文件夹并打开git。
+* **工作区：**电脑中的目录
+* **暂存区：**也叫stage，或index。一般存放在**.git目录**（隐藏目录）下的index文件中
+* **版本库：**工作区中的隐藏目录 **.git** ，不算工作区，而是 Git 的版本库
+
+![工作区和版本库的关系](images/工作区和版本库的关系.jpg)
+
+# 创建仓库
+
+## git init 
+
+使用当前目录作为 Git 仓库，只需要将其初始化
+
+```
+git init # 将当前目录初始化为 Git 仓库
+```
+
+## git clone
+
+```
+git clone <repo> # 克隆指定的 Git 仓库
+git clone <repo> <directory> # 克隆指定的 Git 仓库到某个目录下
+```
+
+**参数说明：**
+
+* **repo：**Git 仓库
+* **directory：**本地目录名
 
 # 添加文件到仓库
 
@@ -134,3 +157,21 @@ $ git checkout dev #切换到dev分支
 \$ git push origin <tagname> #推送单个标签 
 ​\$ git push origin --tags #推送全部尚未推送至远程的本地标签 
 \$ git push origin :refs/tags/<tagname> #删除一个远程标签
+
+# linux 文件操作指令
+
+```
+cd <foledr name> # 载入目录
+
+ls # 浏览目录下的文件
+ls -a # 浏览目录下的所有文件（包括隐藏文件）
+
+cat <file name> # 打开文件
+
+pwd # 显示当前位置
+
+mkdir <filename> # 创建目录
+```
+
+
+
