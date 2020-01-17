@@ -41,7 +41,7 @@ Git 提供了 **git config** 工具，用来配置或读取相应的工作环境
 
 ## git add
 
-执行 git add 命令可以将文件添加到**缓存**。
+执行 **git add** 命令可以将文件添加到**缓存**。
 
 * **git add \<file\>：**添加文件名为 file 的文件到缓存
 * **git add .：**添加所有新增文件到缓存，包括文件夹
@@ -49,7 +49,7 @@ Git 提供了 **git config** 工具，用来配置或读取相应的工作环境
 
 ## git status 
 
-git status 命令用来查看上次提交后是否有更改及更改的内容。
+**git status** 命令用来查看上次提交后是否有更改及更改的内容。
 
 * **git status：**查看更改内容
 * **git status -s：**查看简短的状态
@@ -63,7 +63,7 @@ git status 命令用来查看上次提交后是否有更改及更改的内容。
 
 ## git diff
 
-git diff 命令显示 git status 的**详细信息**。
+**git diff** 命令显示 **git status** 的**详细信息**。
 
 - **git diff：**尚未缓存的改动
 - **git diff --cached： **查看已缓存的改动
@@ -72,7 +72,7 @@ git diff 命令显示 git status 的**详细信息**。
 
 ## git commit
 
-执行 git add 写入缓存后，执行 git commit 将缓存区内容添加到**仓库**中。
+执行 **git add** 写入缓存后，执行 git commit 将缓存区内容添加到**仓库**中。
 
 常见选项：
 
@@ -82,19 +82,19 @@ git diff 命令显示 git status 的**详细信息**。
 
 ## git reset 
 
-git reset 命令取消已缓存的内容。
+**git reset** 命令取消已缓存的内容。
 
 * **git reset \<file\>：**取消文件 file 的缓存
 
 ## git reset HEAD
 
-执行 git reset HEAD 命令用当前分支的版本库目录替代缓存区目录。
+执行 **git reset HEAD** 命令用当前分支的版本库目录替代缓存区目录。
 
 * **git reset HEAD \<file\>：**用版本库中的文件替代缓存区的文件
 
 ## git rm
 
-git rm 命令将文件从已跟踪文件清单中移除。
+**git rm** 命令将文件从已跟踪文件清单中移除。
 
 > 已跟踪文件的含义：已经添加到缓存区中的文件，包含上次版本库中的，以及本次 add 到缓存区中的文件。
 
@@ -105,32 +105,40 @@ git rm 命令将文件从已跟踪文件清单中移除。
 
 ## git mv
 
-git mv 命令用于移动或重命名一个文件、目录、软连接。
+**git mv** 命令用于移动或重命名一个文件、目录、软连接。
 
 ## git checkout \<file\>
 
-执行 git checkout \<file\>命令从缓存区中恢复内容。
+执行 **git checkout \<file\>** 命令从缓存区中恢复文件。
+
+## git checkout HEAD \<file\>
+
+执行 git checkout HEAD \<file\> 命令从版本库中恢复文件。
+
+# 分支管理
+
+分支会保存最近提交的快照，切换时替换工作目录的内容，所以不需要多个目录。
+
+**git branch** 命令能列出所有的分支
+
+## git branch
+
+* **git branch (branchname)：**创建分支
+* **git branch -d (branchname)：**删除分支
+* **git branch -D (branchname)：**强制删除分支（未合并的分支）
+
+## git checkout (branchname)
+
+* **git checkout (branchname)：**切换分支
+* **git checkout -b (branchname)：**创建分支并切换
+
+## git merge
+
+**git merge** 命令用于将某分支合并到主分支
+
+# 查看提交历史
 
 
-
-# 版本回退
-
-查看历史记录
-\$ git log #命令显示从最近到最远的提交日志
-查看文件内容
-\$ cat \<file\>
-
-回退到上个版本（前提是没有推送到远程库
-$ git reset --hard HEAD^ \#工作区文件内容会改变，修改HEAD^为上一个，HEAD^^上两个，HEAD~100上一百个
-查看历史命令
-\$ git reflog
-
-\$ git add <file> #是将文件添加到暂存区，文件修改后的内容不执行该命令不会被提交到仓库内
-
-\$ git checkout -- <file> #如果未将修改提交到暂存区，该命令可以将**修改后的文件**回退到上一次add或者commit时的状态
-\$ git reset HEAD \<file\> #如果将修改提交到了暂存区，该命令可以回退到上个版本库的状态
-
-> git reset HEAD \<file\>和git reset --hard HEAD的不同：前者仅撤销暂存区的修改，后者会撤销工作区的修改
 
 # 创建远程仓库
 
@@ -139,14 +147,6 @@ $ ssh-keygen -t rsa -C "email" #在用户主目录中创建SSH Key
 2. 在github中添加SSH Key
 3. 关联远程库和本地库
 $ git push -u origin master #把原始分支推送到远程库并且将两者关联(-u参数)，之后可以省略-u
-
-# 克隆远程库
-
-1. 在github中创建远程库
-
-2. 在git中输入命令：git clone ...
-
-   > 点击repository界面的clone or download，可以获取...的内容。
 
 # 分支管理
 
