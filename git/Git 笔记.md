@@ -136,29 +136,35 @@ Git 提供了 **git config** 工具，用来配置或读取相应的工作环境
 
 **git merge** 命令用于将某分支合并到主分支
 
-# 查看提交历史
+# 查看提交日志
 
+**git log** 命令回顾提交历史。
 
+* **git log -oneline：**查看简洁的提交历史
+* **git log --graph：**查看拓扑图，哪里出现分支和合并
+* **git log --reverse：**逆向显示历史
+* **git log --author：**查看某个用户的提交日志
+* **--since --before --until --after：**前两个是时间长度，后两个是具体时间，如--before={3.weeks.ago}，--after={2010-04-18}
+* **git log --decorate：**查看含标签的日志
+
+# 标签
+
+**git tag** 命令添加标签，通常使用带注解的标签：
+
+* **git tag -a (tagname)：**执行后打开编辑器，添加一句**标签注解**
+* **git tag -a (tagname) (lognum)：**发布了某个版本后，使用这个命令**追加**标签
+*  **git tag -d (tagname)：**删除标签
+* **git tag：**查看所有标签
 
 # 创建远程仓库
 
-1. 创建SSH Key
-$ ssh-keygen -t rsa -C "email" #在用户主目录中创建SSH Key
-2. 在github中添加SSH Key
-3. 关联远程库和本地库
-$ git push -u origin master #把原始分支推送到远程库并且将两者关联(-u参数)，之后可以省略-u
+## 添加远程库
+
+1. 创建 SSH Key
+  * **ssh-keygen -t rsa -C "email_addr"：**在用户主目录中创建 SSH Keyb
+2. 复制 **.ssh** 文件夹下的 **-id_rsa.pub** 中**SSH**，在 github 中添加 SSH Key
 
 # 分支管理
-
-> 每次提交(commit)后，master分支的指针就前移动一步，实质是HEAD指向当前分支
-
-\$ git branch dev #创建dev分支
-$ git checkout dev #切换到dev分支
-这两个命令相当于：\$ git checkout -b dev
-
-\$ git branch #会列出所有的分支，当前分支前会有 * 号
-\$ git merge dev #将dev分支合并到当前分支
-\$ git branch -d dev #删除dev分支
 
 ## 禁用Fast forward模式   
 \$ git merge --no-ff -m "merge with no-ff" dev #--no-f参数为禁用Fast forward，-m用于描述commit
@@ -174,10 +180,6 @@ $ git checkout dev #切换到dev分支
 \$ git stash list #查看stash内容
 
 > 可以多次stash，然后恢复指定的stash
-
-## 强制删除分支   
-
-\$ git branch -D <branch-name> #强制删除未合并的分支
 
 ## 推送分支
 
