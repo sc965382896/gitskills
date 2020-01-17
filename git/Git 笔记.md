@@ -138,13 +138,14 @@ Git 提供了 **git config** 工具，用来配置或读取相应的工作环境
 
 ## BUG分支(保存现场)
 
-当发现BUG需要进行修复，但工作尚未完成，可以使用下列命令来保存当前的现场：
-\$ git stash
+当发现BUG需要进行修复，但工作尚未完成，执行 **git stash** 命令来保存当前的现场
+
 修复BUG时需要明确在哪个分支上进行修复，并在其上创建临时分支，修复完毕后合并分支并删除
-\$ git stash apply #恢复现场但不删除stash内容
-\$ git stash drop #删除stash内容
-\$ git stash pop #恢复的同时删除stash内容
-\$ git stash list #查看stash内容
+
+* **git stash apply：**恢复现场但不删除stash内容
+* **git stash drop：**删除stash内容
+* **git stash pop：**恢复的同时删除stash内容
+* **git stash list：**查看stash内容
 
 > 可以多次stash，然后恢复指定的stash
 
@@ -198,27 +199,6 @@ Git 提供了 **git config** 工具，用来配置或读取相应的工作环境
 ### 删除远程库
 
 * **git remote rm [alias]：**删除远程仓库 [alias]
-
-# 分支管理
-
-## 禁用Fast forward模式   
-\$ git merge --no-ff -m "merge with no-ff" dev #--no-f参数为禁用Fast forward，-m用于描述commit
-
-## 抓取分支
-
-\$ git checkout -b dev origin/dev #在本地创建远程origin的dev分支
-\$ git pull #抓取远程库中最新的提交并尝试合并
-
-> 如果git pull失败，则根据提示设置dev和origin/dev的链接
-
-\$ git rebase #将本地未push的分支提交历史整理成直线
-> 只对尚未推送或分享给别人的本地修改执行变基操作清理历史；从不对已推送至别处的提交执行变基操作
-
-## 标签
-
-$ git push origin <tagname> #推送单个标签 
-​\$ git push origin --tags #推送全部尚未推送至远程的本地标签 
-\$ git push origin :refs/tags/<tagname> #删除一个远程标签
 
 # linux 文件操作指令
 
