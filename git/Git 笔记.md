@@ -136,6 +136,18 @@ Git 提供了 **git config** 工具，用来配置或读取相应的工作环境
 
 **git merge** 命令用于将某分支合并到主分支
 
+## BUG分支(保存现场)
+
+当发现BUG需要进行修复，但工作尚未完成，可以使用下列命令来保存当前的现场：
+\$ git stash
+修复BUG时需要明确在哪个分支上进行修复，并在其上创建临时分支，修复完毕后合并分支并删除
+\$ git stash apply #恢复现场但不删除stash内容
+\$ git stash drop #删除stash内容
+\$ git stash pop #恢复的同时删除stash内容
+\$ git stash list #查看stash内容
+
+> 可以多次stash，然后恢复指定的stash
+
 # 查看提交日志
 
 **git log** 命令回顾提交历史。
@@ -179,28 +191,18 @@ Git 提供了 **git config** 工具，用来配置或读取相应的工作环境
 * **git fetch [alias] [branch]：** 提取远程仓库 alias 上的分支到本地
 * **git merge [alias]/[branch]：**将从远程仓库提取的分支合并到当前分支上
 
+### 推送远程库
+
+* **git push [alias] [branch]：**推送 [branch] 分支到远程仓库 [alias] 的 [branch] 分支
+
+### 删除远程库
+
+* **git remote rm [alias]：**删除远程仓库 [alias]
+
 # 分支管理
 
 ## 禁用Fast forward模式   
 \$ git merge --no-ff -m "merge with no-ff" dev #--no-f参数为禁用Fast forward，-m用于描述commit
-
-## BUG分支(保存现场)
-
-当发现BUG需要进行修复，但工作尚未完成，可以使用下列命令来保存当前的现场：
-\$ git stash
-修复BUG时需要明确在哪个分支上进行修复，并在其上创建临时分支，修复完毕后合并分支并删除
-\$ git stash apply #恢复现场但不删除stash内容
-\$ git stash drop #删除stash内容
-\$ git stash pop #恢复的同时删除stash内容
-\$ git stash list #查看stash内容
-
-> 可以多次stash，然后恢复指定的stash
-
-## 推送分支
-
-\$ git remote #查看远程库的信息
-\$ git remote -v #查看远程库的详细信息
-\$ git push origin master #把master分支推送到远程库中的对应分支
 
 ## 抓取分支
 
