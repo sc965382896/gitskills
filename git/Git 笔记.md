@@ -1,24 +1,20 @@
 # Git 配置
 
-Git 提供了 git config 工具，用来配置或读取相应的工作环境变量。
+Git 提供了 **git config** 工具，用来配置或读取相应的工作环境变量。
 
 ## 配置用户信息
 
-```
-git config --global user.name (name) # 配置用户名
-git config --global user.email (email_addr) # 配置用户邮箱
-```
+* 配置用户名：**git config --global user.name (name)**
+* 配置用户邮箱：**git config --global user.email (email_addr)**
 
 ## 查看配置信息
 
-```
-git config --list
-```
+**git config --list**
 
 # 工作区、暂存区和版本库
 
 * **工作区：**电脑中的目录
-* **暂存区：**也叫stage，或index。一般存放在**.git目录**（隐藏目录）下的index文件中
+* **暂存区：**也叫**stage**，或**index**。一般存放在**.git目录**（隐藏目录）下的index文件中
 * **版本库：**工作区中的隐藏目录 **.git** ，不算工作区，而是 Git 的版本库
 
 ![工作区和版本库的关系](images/工作区和版本库的关系.jpg)
@@ -27,44 +23,79 @@ git config --list
 
 ## git init 
 
-使用当前目录作为 Git 仓库，只需要将其初始化
+* 使用当前目录作为 Git 仓库，只需要将其**初始化**
 
-```
-git init # 将当前目录初始化为 Git 仓库
-```
+* 将当前目录初始化为 Git 仓库：**git init**
 
 ## git clone
 
-```
-git clone <repo> # 克隆指定的 Git 仓库
-git clone <repo> <directory> # 克隆指定的 Git 仓库到某个目录下
-```
+克隆指定的 Git 仓库：**git clone \<repo\>**
+
+克隆指定的 Git 仓库到某个目录下：**git clone \<repo\> \<directory\>**
 
 **参数说明：**
 
 * **repo：**Git 仓库
 * **directory：**本地目录名
 
-# 添加文件到仓库
+# 基础操作
 
-添加文件到仓库 
-\$ git add 、\<file\>
+## git add
 
-添加所有文件到仓库
+执行 git add 命令可以将文件添加到**缓存**。
 
-\$ git add .
+* 添加文件名为 file 的文件到缓存：**git add \<file\>**
+* 添加所有新增文件到缓存，包括文件夹：**git add .**
+* 添加后缀为 .c 的文件到缓存：**git add *.c**
 
-提交文件到仓库 
-\$ git commit -m "XX" #-M "XX"为修改内容的说明
+## git status 
 
-# 查看仓库状态
+git status 命令用来查看上次提交后是否有更改及更改的内容。
 
-查看仓库当前的状态 
-$ git status
-查看文件做了什么修改 
-\$ git diff\ <file\>... 
-提交修改到仓库
-\$ git add \<file\>    
+* 查看更改内容：**git status**
+* 查看简短的状态：**git status -s**
+
+简短状态的各个**符号含义**：
+
+* **？：**表示没有被 track（跟踪）的文件更改
+* **A：**表示新增的文件
+* **M：**表示修改的文件
+* **D：**表示删除的文件
+
+## git diff
+
+git diff 命令显示 git status 的**详细信息**。
+
+- 尚未缓存的改动：**git diff**
+- 查看已缓存的改动： **git diff --cached**
+- 查看已缓存的与未缓存的所有改动：**git diff HEAD**
+- 显示摘要而非整个 diff：**git diff --stat**
+
+## git commit
+
+执行 git add 写入缓存后，执行 git commit 将缓存区内容添加到**仓库**中。
+
+常见选项：
+
+* -m：提供提交注释，没有该选项时会尝试打开编辑器填写提交信息
+* -a：修改文件后，跳过缓存，直接提交到仓库
+* -am/-a -m：同时执行以上两个步骤
+
+## git reset 
+
+git reset 命令取消已缓存的内容。
+
+* 取消文件 file 的缓存：**git reset \<file\>**
+
+## git reset HEAD
+
+执行 git reset HEAD 命令用当前分支的版本库目录替代缓存区目录。
+
+* 用版本库中的文件替代缓存区的文件：**git reset HEAD \<file\>**
+
+## git rm
+
+
 
 # 版本回退
 
