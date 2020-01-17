@@ -163,6 +163,21 @@ Git 提供了 **git config** 工具，用来配置或读取相应的工作环境
 1. 创建 SSH Key
   * **ssh-keygen -t rsa -C "email_addr"：**在用户主目录中创建 SSH Keyb
 2. 复制 **.ssh** 文件夹下的 **-id_rsa.pub** 中**SSH**，在 github 中添加 SSH Key
+3. 提交到 GitHub
+   * **git remote add origin git@github.com:x/x.git：**添加远程仓库
+   * **git push -u origin mastre：**推送到远端分支
+
+## 远程库操作
+
+### 查看远程库
+
+* **git remote：**查看当前配置的远程库
+* **git remote -v：**查看远程库各个别名的链接地址
+
+### 提取远程库
+
+* **git fetch [alias] [branch]：** 提取远程仓库 alias 上的分支到本地
+* **git merge [alias]/[branch]：**将从远程仓库提取的分支合并到当前分支上
 
 # 分支管理
 
@@ -199,11 +214,7 @@ Git 提供了 **git config** 工具，用来配置或读取相应的工作环境
 
 ## 标签
 
-\$ git tag <tagname> #用于新建一个标签，默认是HEAD，也可以指定一个commit id
-\$ git tag -a <tagname> -m "blablabla..." #用于指定标签信息
-\$ git tag #查看所有标签
-\$ git tag -d <tagname> #删除标签
-\$ git push origin <tagname> #推送单个标签 
+$ git push origin <tagname> #推送单个标签 
 ​\$ git push origin --tags #推送全部尚未推送至远程的本地标签 
 \$ git push origin :refs/tags/<tagname> #删除一个远程标签
 
