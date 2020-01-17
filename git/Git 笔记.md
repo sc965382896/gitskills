@@ -23,15 +23,14 @@ Git 提供了 **git config** 工具，用来配置或读取相应的工作环境
 
 ## git init 
 
-* 使用当前目录作为 Git 仓库，只需要将其**初始化**
+使用当前目录作为 Git 仓库，只需要将其**初始化**
 
-* 将当前目录初始化为 Git 仓库：**git init**
+* **git init：**将当前目录初始化为 Git 仓库
 
 ## git clone
 
-克隆指定的 Git 仓库：**git clone \<repo\>**
-
-克隆指定的 Git 仓库到某个目录下：**git clone \<repo\> \<directory\>**
+* **git clone \<repo\>：**克隆指定的 Git 仓库
+* **git clone \<repo\> \<directory\>：**克隆指定的 Git 仓库到某个目录下
 
 **参数说明：**
 
@@ -44,16 +43,16 @@ Git 提供了 **git config** 工具，用来配置或读取相应的工作环境
 
 执行 git add 命令可以将文件添加到**缓存**。
 
-* 添加文件名为 file 的文件到缓存：**git add \<file\>**
-* 添加所有新增文件到缓存，包括文件夹：**git add .**
-* 添加后缀为 .c 的文件到缓存：**git add *.c**
+* **git add \<file\>：**添加文件名为 file 的文件到缓存
+* **git add .：**添加所有新增文件到缓存，包括文件夹
+* **git add *.c：**添加后缀为 .c 的文件到缓存
 
 ## git status 
 
 git status 命令用来查看上次提交后是否有更改及更改的内容。
 
-* 查看更改内容：**git status**
-* 查看简短的状态：**git status -s**
+* **git status：**查看更改内容
+* **git status -s：**查看简短的状态
 
 简短状态的各个**符号含义**：
 
@@ -66,10 +65,10 @@ git status 命令用来查看上次提交后是否有更改及更改的内容。
 
 git diff 命令显示 git status 的**详细信息**。
 
-- 尚未缓存的改动：**git diff**
-- 查看已缓存的改动： **git diff --cached**
-- 查看已缓存的与未缓存的所有改动：**git diff HEAD**
-- 显示摘要而非整个 diff：**git diff --stat**
+- **git diff：**尚未缓存的改动
+- **git diff --cached： **查看已缓存的改动
+- **git diff HEAD：**查看已缓存的与未缓存的所有改动
+- **git diff --stat：**显示摘要而非整个 diff
 
 ## git commit
 
@@ -77,25 +76,42 @@ git diff 命令显示 git status 的**详细信息**。
 
 常见选项：
 
-* -m：提供提交注释，没有该选项时会尝试打开编辑器填写提交信息
-* -a：修改文件后，跳过缓存，直接提交到仓库
-* -am/-a -m：同时执行以上两个步骤
+* **-m：**提供提交注释，没有该选项时会尝试打开编辑器填写提交信息
+* **-a：**修改文件后，跳过缓存，直接提交到仓库
+* **-am/-a -m：**同时执行以上两个步骤
 
 ## git reset 
 
 git reset 命令取消已缓存的内容。
 
-* 取消文件 file 的缓存：**git reset \<file\>**
+* **git reset \<file\>：**取消文件 file 的缓存
 
 ## git reset HEAD
 
 执行 git reset HEAD 命令用当前分支的版本库目录替代缓存区目录。
 
-* 用版本库中的文件替代缓存区的文件：**git reset HEAD \<file\>**
+* **git reset HEAD \<file\>：**用版本库中的文件替代缓存区的文件
 
 ## git rm
 
 git rm 命令将文件从已跟踪文件清单中移除。
+
+> 已跟踪文件的含义：已经添加到缓存区中的文件，包含上次版本库中的，以及本次 add 到缓存区中的文件。
+
+* **git rm \<file\>：**删除缓存区和工作目录中的文件
+* **git rm -f \<file\>：**当工作目录与缓存区中文件内容不一致时，需要使用 -f 选项
+* **git rm --cached \<file\>：**仅从跟踪清单中删除文件
+* **git rm -r *：**递归地删除目录下的所有子目录和文件
+
+## git mv
+
+git mv 命令用于移动或重命名一个文件、目录、软连接。
+
+## git checkout \<file\>
+
+执行 git checkout \<file\>命令从缓存区中恢复内容。
+
+
 
 # 版本回退
 
