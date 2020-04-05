@@ -202,7 +202,7 @@ Git 提供了 **git config** 工具，用来配置或读取相应的工作环境
 
 # linux 文件操作指令
 
-```
+```shell
 cd <foledr name> # 载入目录
 
 ls # 浏览目录下的文件
