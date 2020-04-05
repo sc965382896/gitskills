@@ -21,7 +21,7 @@ Git 提供了 **git config** 工具，用来配置或读取相应的工作环境
 
 # 创建仓库
 
-## git init 
+## git init
 
 使用当前目录作为 Git 仓库，只需要将其**初始化**
 
@@ -174,7 +174,7 @@ Git 提供了 **git config** 工具，用来配置或读取相应的工作环境
 ## 添加远程库
 
 1. 创建 SSH Key
-  * **ssh-keygen -t rsa -C "email_addr"：**在用户主目录中创建 SSH Keyb
+  * **ssh-keygen -t rsa -C "email_addr"：**在用户主目录中创建 SSH Key
 2. 复制 **.ssh** 文件夹下的 **-id_rsa.pub** 中**SSH**，在 github 中添加 SSH Key
 3. 提交到 GitHub
    * **git remote add origin git@github.com:x/x.git：**添加远程仓库
