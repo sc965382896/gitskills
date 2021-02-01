@@ -143,6 +143,7 @@ Git 提供了 **git config** 工具，用来配置或读取相应的工作环境
 
 ## BUG分支(保存现场)
 
+<<<<<<< Updated upstream
 当发现BUG需要进行修复，但工作尚未完成，执行 **git stash** 命令来保存当前的现场
 
 修复BUG时需要明确在哪个分支上进行修复，并在其上创建临时分支，修复完毕后合并分支并删除
@@ -151,6 +152,15 @@ Git 提供了 **git config** 工具，用来配置或读取相应的工作环境
 * **git stash drop：**删除stash内容
 * **git stash pop：**恢复的同时删除stash内容
 * **git stash list：**查看stash内容
+=======
+当发现BUG需要进行修复，但工作尚未完成，可以使用下列命令来保存当前的现场：
+\$ git stash
+修复BUG时需要明确在哪个分支上进行修复，并在其上创建临时分支，修复完毕后合并分支并删除
+\$ git stash apply #恢复现场但不删除stash内容
+\$ git stash drop #删除stash内容
+\$ git stash pop #恢复的同时删除stash内容
+\$ git stash list #查看stash内容
+>>>>>>> Stashed changes
 
 > 可以多次stash，然后恢复指定的stash
 
@@ -194,14 +204,29 @@ Git 提供了 **git config** 工具，用来配置或读取相应的工作环境
 
 ### 提取远程库
 
-* **git fetch [alias] [branch]：** 提取远程仓库 alias 上的分支到本地
+* **git fetch [alias] [branch]：** 提取远程仓库 alias 上的 master 分支到本地
 * **git merge [alias]/[branch]：**将从远程仓库提取的分支合并到当前分支上
 
+<<<<<<< Updated upstream
 ### 推送远程库
 
 * **git push [alias] [branch]：**推送 [branch] 分支到远程仓库 [alias] 的 [branch] 分支
 
 ### 删除远程库
+=======
+### 推送到远程仓库
+
+* **git push [alias] [branch]：**推送 [branch] 分支到远程仓库 [alias] 的 [branch] 分支上
+
+### 删除远程仓库
+
+* **git remote rm [alias]：**删除远程仓库 [alias]
+
+# 分支管理
+
+## 禁用Fast forward模式   
+\$ git merge --no-ff -m "merge with no-ff" dev #--no-f参数为禁用Fast forward，-m用于描述commit
+>>>>>>> Stashed changes
 
 * **git remote rm [alias]：**删除远程仓库 [alias]
 
